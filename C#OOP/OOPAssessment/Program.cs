@@ -45,6 +45,36 @@ namespace FareEngineAssessment
         }
     }
 
+    public class StandardCar : Vehicle
+    {
+        public override decimal PerKmRate => 2.50m;
+        public override decimal PerMinuteRate => 0.50m;
+
+        public StandardCar(string licensePlate, decimal baseFare = 10.0m) : base(licensePlate, baseFare) { }
+    }
+
+    public class LuxurySedan : Vehicle
+    {
+        public override decimal PerKmRate => 5.00m;
+        public override decimal PerMinuteRate => 1.50m;
+
+        private readonly decimal _luxuryTax;
+
+        public LuxurySedan(string licensePlate, decimal baseFare = 25.0m, decimal luxuryTax = 15.0m) : base(licensePlate, baseFare)
+        {
+            if (luxuryTax < 0)
+            {
+                throw new ArgumentException("Luxury tax cannot be negative", nameof(luxuryTax));
+            }
+
+            _luxuryTax = luxuryTax;
+        }
+
+        public override decimal CalculateBaseTripFare(decimal distanceKms, decimal durationMinutes)
+        {
+            return base.CalculateBaseTripFare(distanceKms, durationMinutes) + _luxuryTax;
+        }
+    }
     public class  Trip
     {
         
@@ -57,6 +87,10 @@ namespace FareEngineAssessment
             try
             {
                 var passenger = new Passenger("P101", "Imran Raza");
+
+                var standardCar = new StandardCar("DHA-12-3456");
+
+                var luxurySedan = new LuxurySedan("CTG-99-8888");
 
             }
             catch (Exception ex)
