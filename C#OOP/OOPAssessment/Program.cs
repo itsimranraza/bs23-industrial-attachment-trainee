@@ -4,6 +4,8 @@ namespace FareEngineAssessment
 {
     public enum TripStatus { Pending, Paid, Failed }
 
+    public record Passenger(string Id, string Name);
+
     public interface IPromotion
     {
         decimal ApplyDiscount(decimal cuurentFare);
@@ -28,7 +30,14 @@ namespace FareEngineAssessment
     {
         static void Main(string[] args)
         {
-            
+            try
+            {
+                var passenger = new Passenger("P101", "Imran Raza");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[Error Caught]: {ex.Message}");
+            }
         }
     }
 }
