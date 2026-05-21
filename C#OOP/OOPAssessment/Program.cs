@@ -195,18 +195,25 @@ namespace FareEngineAssessment
                 var passenger = new Passenger("P101", "Imran Raza");
                 var paymentService = new CreditCardPaymentService();
 
+                Console.WriteLine("---Test Case 1: Standard Car (No Promotion)---");
                 var standardCar = new StandardCar("DHA-12-3456");
                 var trip1 = new Trip(standardCar, passenger, distanceKms: 10, durationMinutes: 20);
+                Console.WriteLine($"Calculated Fare: ${trip1.CalculateFinalFare():F2}");
                 trip1.CompleteTrip(paymentService);
 
+                Console.WriteLine("---Test Case 2: Luxury Sedan (With 10% Discoutn)---");
                 var luxurySedan = new LuxurySedan("CTG-99-8888");
                 var tenPercentOff = new PercentageDiscount(10);
                 var trip2 = new Trip(luxurySedan, passenger, distanceKms: 15, durationMinutes: 30, promotion: tenPercentOff);
+                Console.WriteLine($"Calculated Fare: ${trip2.CalculateFinalFare():F2}");
                 trip2.CompleteTrip(paymentService);
 
+                Console.WriteLine("---Test Case 3: Flat Discoutn & Base Fare Protection---");
                 var hugeDiscount = new FlatDiscount(50.0m);
                 var trip3 = new Trip(standardCar, passenger, distanceKms: 2, durationMinutes: 5, promotion: hugeDiscount);
+                Console.WriteLine($"Calculated Fare (Protected by BaseFare): ${trip3.CalculateFinalFare():F2}");
 
+                Console.WriteLine("---Test Case 4: Defensive Programming (Error Handling)---");
                 var invalidTrip = new Trip(standardCar, passenger, distanceKms: -5, durationMinutes: 10);
             }
             catch (Exception ex)
