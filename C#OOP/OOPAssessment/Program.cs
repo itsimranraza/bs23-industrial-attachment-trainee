@@ -75,6 +75,26 @@ namespace FareEngineAssessment
             return base.CalculateBaseTripFare(distanceKms, durationMinutes) + _luxuryTax;
         }
     }
+
+    public class PercentageDiscount : IPromotion
+    {
+        private readonly decimal _percentage;
+
+        public PercentageDiscount(decimal percentage)
+        {
+            if (percentage is < 0 or > 100)
+            {
+                throw new ArgumentException("Percentage must be between 0 and 100.");
+            }
+
+            _percentage = percentage;
+        }
+
+        public decimal ApplyDiscount(decimal currentFare)
+        {
+            return currentFare - (currentFare * (_percentage / 100));
+        }
+    }
     public class  Trip
     {
         
@@ -91,7 +111,7 @@ namespace FareEngineAssessment
                 var standardCar = new StandardCar("DHA-12-3456");
 
                 var luxurySedan = new LuxurySedan("CTG-99-8888");
-
+                var tenPercentOff = new PercentageDiscount(10);
             }
             catch (Exception ex)
             {
