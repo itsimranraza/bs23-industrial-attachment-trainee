@@ -127,7 +127,63 @@ namespace FareEngineAssessment
     }
     public class  Trip
     {
+        public Vehicle AssignedVehicle { get; }
+        public Passenger TripPassenger { get; }
+        public decimal DistanceKms { get; }
+        public decimal DurationMinutes { get; }
+        public IPromotion? Promotion { get; }
+        public TripStatus Status { get; private set; }
+
+        public Trip(Vehicle vehicle, Passenger passenger, decimal distanceKms, decimal durationMinutes, IPromotion? promotion = null)
+        {
+            AssignedVehicle = vehicle ?? throw new ArgumentNullException(nameof(vehicle), "Vehicle must be assigned to a trip.");
+            TripPassenger = passenger ?? throw new ArgumentNullException(nameof(passenger), "Passenger must be assigned.");
+
+            if (distanceKms < 0)
+            {
+                throw new ArgumentException("Distance cannot be negative", nameof(distanceKms));
+            }
+            if (durationMinutes <= 0)
+            {
+                throw new ArgumentException("Duration must be greater than zero.", nameof(durationMinutes));
+            }
+
+            DistanceKms = distanceKms;
+            DurationMinutes = durationMinutes;
+            Promotion = promotion;
+            Status = TripStatus.Pending;
+        }
         
+        public decimal CalculateFinalFare()
+        {
+            decimal fare = AssignedVehicle.CalculateBaseTripFare(DistanceKms, DurationMinutes);
+
+            if(Promotion != null)
+            {
+                fare = Promotion.ApplyDiscount(fare);
+            }
+
+            return Math.Max(fare, AssignedVehicle.BaseFare);
+        }
+
+        public void CompleteTrip(IPaymentService paymentService)
+        {
+            if (paymentService == null)
+            {
+                throw new ArgumentNullException(nameof(paymentService));
+            }
+            if(Status == TripStatus.Paid)
+            {
+                throw new InvalidOperationException("Trip is already paid.");
+            }
+
+            decimal finalFare = CalculateFinalFare();
+            bool isSuccess = paymentService.ProcessPayment(TripPassenger.Id, finalFare);
+
+            Status = isSuccess ? TripStatus.Paid : TripStatus.Failed;
+
+            Console.WriteLine($"[System] Trip status updated to: {Status}");
+        }
     }
 
     class Program
@@ -140,11 +196,18 @@ namespace FareEngineAssessment
                 var paymentService = new CreditCardPaymentService();
 
                 var standardCar = new StandardCar("DHA-12-3456");
+                var trip1 = new Trip(standardCar, passenger, distanceKms: 10, durationMinutes: 20);
+                trip1.CompleteTrip(paymentService);
 
                 var luxurySedan = new LuxurySedan("CTG-99-8888");
                 var tenPercentOff = new PercentageDiscount(10);
+                var trip2 = new Trip(luxurySedan, passenger, distanceKms: 15, durationMinutes: 30, promotion: tenPercentOff);
+                trip2.CompleteTrip(paymentService);
 
                 var hugeDiscount = new FlatDiscount(50.0m);
+                var trip3 = new Trip(standardCar, passenger, distanceKms: 2, durationMinutes: 5, promotion: hugeDiscount);
+
+                var invalidTrip = new Trip(standardCar, passenger, distanceKms: -5, durationMinutes: 10);
             }
             catch (Exception ex)
             {
