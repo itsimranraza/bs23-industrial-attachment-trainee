@@ -95,6 +95,26 @@ namespace FareEngineAssessment
             return currentFare - (currentFare * (_percentage / 100));
         }
     }
+
+    public class FlatDiscount : IPromotion
+    {
+        private readonly decimal _discountAmount;
+
+        public FlatDiscount(decimal discountAmount)
+        {
+            if (discountAmount < 0)
+            {
+                throw new ArgumentException("Discount amount cannot be negative");
+            }
+
+            _discountAmount = discountAmount;
+        }
+
+        public decimal ApplyDiscount(decimal currentFare)
+        {
+            return currentFare - _discountAmount;
+        }
+    }
     public class  Trip
     {
         
@@ -112,6 +132,8 @@ namespace FareEngineAssessment
 
                 var luxurySedan = new LuxurySedan("CTG-99-8888");
                 var tenPercentOff = new PercentageDiscount(10);
+
+                var hugeDiscount = new FlatDiscount(50.0m);
             }
             catch (Exception ex)
             {
