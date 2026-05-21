@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 namespace FareEngineAssessment
 {
@@ -115,6 +116,15 @@ namespace FareEngineAssessment
             return currentFare - _discountAmount;
         }
     }
+
+    public class CreditCardPaymentService : IPaymentService
+    {
+        public bool ProcessPayment(string passengerId, decimal amount)
+        {
+            Console.WriteLine($"[Payment Gateway] Processing ${amount:F2} for Passenger: {passengerId}...");
+            return true;
+        }
+    }
     public class  Trip
     {
         
@@ -127,6 +137,7 @@ namespace FareEngineAssessment
             try
             {
                 var passenger = new Passenger("P101", "Imran Raza");
+                var paymentService = new CreditCardPaymentService();
 
                 var standardCar = new StandardCar("DHA-12-3456");
 
