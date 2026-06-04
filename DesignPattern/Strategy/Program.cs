@@ -15,6 +15,11 @@ public class PayPal : IPaymentStrategy
     {
         Console.WriteLine($"Amount {amount} paid by Paypal.");
     }
+
+    public ICollection<string> GetTransactionHistory()
+    {
+        return new List<string> { "Transaction 1", "Transaction 2", "Transaction 3" };
+    }
 }
 public class ShopingCart
 {
