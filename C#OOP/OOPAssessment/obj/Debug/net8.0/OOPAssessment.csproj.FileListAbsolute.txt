@@ -1,0 +1,15 @@
+E:\BS23\project\C#OOP\OOPAssessment\bin\Debug\net8.0\OOPAssessment.exe
+E:\BS23\project\C#OOP\OOPAssessment\bin\Debug\net8.0\OOPAssessment.deps.json
+E:\BS23\project\C#OOP\OOPAssessment\bin\Debug\net8.0\OOPAssessment.runtimeconfig.json
+E:\BS23\project\C#OOP\OOPAssessment\bin\Debug\net8.0\OOPAssessment.dll
+E:\BS23\project\C#OOP\OOPAssessment\bin\Debug\net8.0\OOPAssessment.pdb
+E:\BS23\project\C#OOP\OOPAssessment\obj\Debug\net8.0\OOPAssessment.GeneratedMSBuildEditorConfig.editorconfig
+E:\BS23\project\C#OOP\OOPAssessment\obj\Debug\net8.0\OOPAssessment.AssemblyInfoInputs.cache
+E:\BS23\project\C#OOP\OOPAssessment\obj\Debug\net8.0\OOPAssessment.AssemblyInfo.cs
+E:\BS23\project\C#OOP\OOPAssessment\obj\Debug\net8.0\OOPAssessment.csproj.CoreCompileInputs.cache
+E:\BS23\project\C#OOP\OOPAssessment\obj\Debug\net8.0\OOPAssessment.sourcelink.json
+E:\BS23\project\C#OOP\OOPAssessment\obj\Debug\net8.0\OOPAssessment.dll
+E:\BS23\project\C#OOP\OOPAssessment\obj\Debug\net8.0\refint\OOPAssessment.dll
+E:\BS23\project\C#OOP\OOPAssessment\obj\Debug\net8.0\OOPAssessment.pdb
+E:\BS23\project\C#OOP\OOPAssessment\obj\Debug\net8.0\OOPAssessment.genruntimeconfig.cache
+E:\BS23\project\C#OOP\OOPAssessment\obj\Debug\net8.0\ref\OOPAssessment.dll
