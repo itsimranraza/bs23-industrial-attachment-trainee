@@ -1,0 +1,47 @@
+﻿@model DoctorCreateViewModel
+@{
+    ViewData["Title"] = "Add New Doctor";
+}
+
+<div class="container mt-4">
+    <h2>Add New Doctor</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Create" method="post">
+                <!-- Validation summary for form-level errors -->
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <!-- Name Input -->
+                <div class="form-group mb-3">
+                    <label asp-for="Name" class="form-label fw-bold"></label>
+                    <input asp-for="Name" class="form-control" placeholder="e.g. Dr. John Doe" />
+                    <!-- This span displays your custom ErrorMessage -->
+                    <span asp-validation-for="Name" class="text-danger small"></span>
+                </div>
+
+                <!-- Specilization Input -->
+                <div class="form-group mb-4">
+                    <label asp-for="Specialization" class="form-label fw-bold">Specialization</label>
+                    <input asp-for="Specialization" class="form-control" placeholder="e.g. Cardiology" />
+                    <!-- This span displays your custom ErrorMessage -->
+                    <span asp-validation-for="Specialization" class="text-danger small"></span>
+                </div>
+
+                <!-- Actions -->
+                <div class="form-group d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">Save Doctor</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- This section enables the client-side validation using your DataAnnotations before the form even hits the server -->
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

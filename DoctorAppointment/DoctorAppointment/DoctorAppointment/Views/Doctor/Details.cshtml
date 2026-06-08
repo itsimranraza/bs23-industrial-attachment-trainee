@@ -1,0 +1,85 @@
+﻿@model Doctor
+@{
+    ViewData["Title"] = "Doctor Details";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Doctor Profile</h2>
+        <div>
+            @* <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">
+                <i class="bi bi-pencil"></i> Edit Profile
+            </a> *@
+            <a asp-action="Index" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Back to List
+            </a>
+        </div>
+    </div>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm border-0 bg-light text-center p-4">
+                <div class="card-body">
+                    @* <div class="mb-3">
+                        <span class="p-3 bg-primary text-white rounded-circle fs-1 fw-bold">
+                            @Model.Name?.Substring(0, 1).ToUpper()
+                        </span>
+                    </div> *@
+                    <h3 class="card-title fw-bold mt-3">@Model.Name</h3>
+                    <p class="text-muted text-uppercase tracking-wider">
+                        <span class="badge bg-info text-dark">@Model.Specialization</span>
+                    </p>
+                    <div class="text-start mt-4 border-top pt-3 text-secondary small">
+                        <p><strong>Doctor ID:</strong> #@Model.Id</p>
+                        <p><strong>Total Appointments:</strong> @(Model.Appointments?.Count ?? 0)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <h4 class="mb-3 text-primary">Scheduled Appointments</h4>
+
+            @if (Model.Appointments == null || !Model.Appointments.Any())
+            {
+                <div class="alert alert-warning text-center" role="alert">
+                    No appointments are currently scheduled for this doctor.
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive bg-white rounded shadow-sm">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col" class="ps-3">Appointment ID</th>
+                                <th scope="col">Patient Name</th>
+                                <th scope="col">Date & Time</th>
+                                @* <th scope="col" class="text-center">Action</th> *@
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var app in Model.Appointments.OrderBy(a => a.AppointmentDateTime))
+                            {
+                                <tr>
+                                    <td class="ps-3 text-muted">#@app.Id</td>
+                                    <td class="fw-bold">@app.PatientName</td>
+                                    <td>
+                                        <i class="bi bi-calendar-event text-secondary me-1"></i>
+                                        @app.AppointmentDateTime.ToString("dd MMM yyyy, hh:mm tt")
+                                    </td>
+                                    @* <td class="text-center">
+                                        <a asp-controller="Appointment" asp-action="Details" asp-route-id="@app.Id" class="btn btn-sm btn-outline-info">
+                                            View
+                                        </a>
+                                    </td> *@
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>
