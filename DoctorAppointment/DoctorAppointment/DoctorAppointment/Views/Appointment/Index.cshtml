@@ -27,7 +27,7 @@
                         <th scope="col">Patient Name</th>
                         <th scope="col">Date & Time</th>
                         <th scope="col">Doctor Name</th>
-                        @* <th scope="col" class="text-center" style="width: 200px;">Actions</th> *@
+                        <th scope="col" class="text-center" style="width: 200px;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,7 +42,7 @@
                                 @(item.Doctor != null ? item.Doctor.Name : "N/A")
                             </td>
 
-                            @* <td class="text-center">
+                            <td class="text-center">
                                 <div class="btn-group btn-group-sm" role="group">
                                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning" title="Edit">
                                         Edit
@@ -54,7 +54,7 @@
                                         Delete
                                     </a>
                                 </div>
-                            </td> *@
+                            </td>
                         </tr>
                     }
                 </tbody>

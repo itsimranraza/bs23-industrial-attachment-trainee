@@ -19,7 +19,9 @@ namespace DoctorAppointment.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var appointments =await _context.Appointments.Include(a => a.Doctor).ToListAsync();
+            var appointments = await _context.Appointments
+                .Include(a => a.Doctor)
+                .ToListAsync();
             return View(appointments);
         }
 
@@ -33,7 +35,7 @@ namespace DoctorAppointment.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(AppointmentCreateViewModels model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 ViewBag.Doctors = new SelectList(_context.Doctors, "Id", "Name");
                 return View(model);
@@ -49,6 +51,59 @@ namespace DoctorAppointment.Controllers
             await _context.Appointments.AddAsync(appointment);
             await _context.SaveChangesAsync();
 
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var appointment = await _context.Appointments
+                .Include(a => a.Doctor)
+                .FirstOrDefaultAsync(a => a.Id == id);
+
+            if(appointment == null)
+            {
+                return NotFound();
+            }
+
+            var model = new AppointmentEditViewModel
+            {
+                Id = appointment.Id,
+                PatientName = appointment.PatientName,
+                AppointmentDateTime = appointment.AppointmentDateTime,
+                DoctorId = appointment.DoctorId
+            };
+
+            ViewBag.Doctors = new SelectList(_context.Doctors, "Id", "Name", model.DoctorId);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, AppointmentEditViewModel model)
+        {
+            if(id != model.Id)
+            {
+                return NotFound();
+            }
+
+            if(!ModelState.IsValid)
+            {
+                ViewBag.Doctors = new SelectList(_context.Doctors, "Id", "Name", model.DoctorId);
+                return View(model);
+            }
+
+            var appointment = await _context.Appointments.FindAsync(id);
+            if(appointment == null)
+            {
+                return NotFound();
+            }
+
+            appointment.PatientName = model.PatientName;
+            appointment.AppointmentDateTime = model.AppointmentDateTime;
+            appointment.DoctorId = model.DoctorId;
+
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
     }
