@@ -51,6 +51,7 @@ namespace DoctorAppointment.Controllers
             await _context.Appointments.AddAsync(appointment);
             await _context.SaveChangesAsync();
 
+            TempData["Success"] = "Appointment created successfully!";
             return RedirectToAction(nameof(Index));
         }
 
@@ -104,6 +105,8 @@ namespace DoctorAppointment.Controllers
             appointment.DoctorId = model.DoctorId;
 
             await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Appointment updated successfully.";
             return RedirectToAction(nameof(Index));
         }
 
@@ -150,6 +153,7 @@ namespace DoctorAppointment.Controllers
             _context.Appointments.Remove(appointment);
             await _context.SaveChangesAsync();
 
+            TempData["Success"] = "Appointment deleted successfully.";
             return RedirectToAction(nameof(Index));
         }
     }
