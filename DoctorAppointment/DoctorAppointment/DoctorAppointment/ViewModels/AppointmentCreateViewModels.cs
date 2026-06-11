@@ -12,7 +12,7 @@ namespace DoctorAppointment.ViewModels
         [DataType(DataType.DateTime)]
         public DateTime AppointmentDateTime { get; set; }
 
-        [Required(ErrorMessage = "Doctor Id is required")]
+        [Required(ErrorMessage = "Doctor is required")]
         public int DoctorId { get; set; }
     }
 }
