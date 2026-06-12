@@ -1,11 +1,12 @@
 ﻿using DoctorAppointment.Entity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DoctorAppointment.Data
 {
-    public class DoctorAppointmentDbContext : DbContext
+    public class DoctorAppointmentDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DoctorAppointmentDbContext(DbContextOptions options) : base(options)
+        public DoctorAppointmentDbContext(DbContextOptions<DoctorAppointmentDbContext> options) : base(options)
         {
         }
 

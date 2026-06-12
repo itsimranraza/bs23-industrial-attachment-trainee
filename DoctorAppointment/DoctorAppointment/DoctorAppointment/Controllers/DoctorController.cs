@@ -51,7 +51,7 @@ namespace DoctorAppointment.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var doctor = await _context.Doctors
-                .Include(d=>d.Appointments)
+                .Include(d => d.Appointments)
                 .FirstOrDefaultAsync(d => d.Id == id);
 
             if(doctor == null)
