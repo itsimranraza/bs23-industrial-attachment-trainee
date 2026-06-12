@@ -1,6 +1,7 @@
 ﻿using DoctorAppointment.Data;
 using DoctorAppointment.Entity;
 using DoctorAppointment.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace DoctorAppointment.Controllers
 {
+    [Authorize]
     public class DoctorController : Controller
     {
         private readonly DoctorAppointmentDbContext _context;
